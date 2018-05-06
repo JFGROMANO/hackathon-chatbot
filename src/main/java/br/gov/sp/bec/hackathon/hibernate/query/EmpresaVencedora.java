@@ -2,6 +2,7 @@ package br.gov.sp.bec.hackathon.hibernate.query;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import br.gov.sp.bec.hackathon.util.ConversorDeData;
 
@@ -22,7 +23,8 @@ public class EmpresaVencedora {
 	}
 	@Override
 	public String toString() {
-		DecimalFormat decFormat = new DecimalFormat("'R$ ' 0.##");
-		return "*Razao social:* " + nome + "\n*Valor global:*" + decFormat.format(valor);
+		NumberFormat nf = NumberFormat.getCurrencyInstance();  
+		String formatado = nf.format (valor);
+		return "*Razao social:* " + nome + "\n*Valor global:*" + formatado;
 	}
 }

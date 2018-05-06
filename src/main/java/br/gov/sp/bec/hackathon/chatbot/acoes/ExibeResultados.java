@@ -62,11 +62,11 @@ public class ExibeResultados<T> implements AcaoBot {
 		}
 		
 		if(strMenssagem.toLowerCase().indexOf("cancelar") > -1) {
-			resultado.setAcao(new BuscaOportunidade());
+			resultado.setAcao(new MensagemInicial());
 		}
 		
 		if(posicaoAtual >= listaResultados.size() || posicaoAtual <= -1) {
-			posicaoAtual = 0;
+			resultado.setAcao(new BuscaOportunidade());
 		}
 		resultado.setMensagemRetorno("");
 		return resultado;

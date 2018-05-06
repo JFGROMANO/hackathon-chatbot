@@ -5,6 +5,8 @@ import org.telegram.telegrambots.api.methods.send.SendChatAction;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
@@ -77,7 +79,8 @@ public class BotInicial extends TelegramLongPollingBot {
 	        sendMessage.setText(texto);
 	        sendMessage.enableMarkdown(true);
 	        if(possibilidadeSelecionada.getExibirSugestoes()) {
-	        	 sendMessage.setReplyMarkup(possibilidadeSelecionada.pegaPossibilidadesDeResposta());
+	        	ReplyKeyboard markup = possibilidadeSelecionada.pegaPossibilidadesDeResposta();
+	        	sendMessage.setReplyMarkup(markup);
 	        }
 	        setDigitando(mensagem, false);
 	        try {

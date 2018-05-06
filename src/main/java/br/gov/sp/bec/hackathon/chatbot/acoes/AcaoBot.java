@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.telegram.telegrambots.api.objects.Message;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 
 public interface AcaoBot {
@@ -15,21 +17,23 @@ public interface AcaoBot {
 	List<AcaoBot> getAcoes();
 	RetornoDaInterpretacao interpretaMensagemRecebida(Message mensagem, AcaoBot acaoSelecionada);
 	
-	public default ReplyKeyboardMarkup pegaPossibilidadesDeResposta() {
+	public default ReplyKeyboard pegaPossibilidadesDeResposta() {
 		List<KeyboardRow> commandos = new ArrayList<KeyboardRow>();
 		for (String sugestao : getSugestoes()) {
 			KeyboardRow comando = new KeyboardRow();		
 			comando.add(sugestao);
 			commandos.add(comando);
 		}
-		
 		ReplyKeyboardMarkup replyMarkup = new ReplyKeyboardMarkup();
-		replyMarkup.setResizeKeyboard(true);
-		replyMarkup.setOneTimeKeyboad(false);
-		replyMarkup.setKeyboard(commandos);
-		replyMarkup.setSelective(false);
-		
-        return replyMarkup;
+		if(commandos.size() > 0) {
+			replyMarkup.setResizeKeyboard(true);
+			replyMarkup.setOneTimeKeyboad(false);
+			replyMarkup.setKeyboard(commandos);
+			replyMarkup.setSelective(false);
+			return replyMarkup;
+		}else {
+			return new ReplyKeyboardRemove();
+		}
     }
 	
 	public default boolean getExibirSugestoes() {
